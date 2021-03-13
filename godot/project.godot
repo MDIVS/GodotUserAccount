@@ -1,0 +1,46 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[  ]
+_global_script_class_icons={
+
+}
+
+[application]
+
+config/name="AppSketch"
+config/description="This aplication is under privare license that dont allow you to manipulate the source code for any propourse! If you had the source code without Santos, M. D. I. V.  permission, remove it from you computer before any judicial process be taked."
+run/main_scene="res://scenes/main.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+G="*res://scripts/g.gd"
+
+[display]
+
+window/size/width=480
+window/size/height=480
+window/size/test_width=512
+window/size/test_height=900
+window/handheld/orientation="portrait"
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom="res://themes/default_theme.tres"
+theme/custom_font="res://fonts/Callibri/calibri.tres"
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false

@@ -1,0 +1,136 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://themes/default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://themes/spotlight.tres" type="Theme" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends VBoxContainer
+
+var Switch : String = \"null\" setget set_switch
+
+func set_switch(value:String):
+	for i in get_children():
+		if i.filename == value:
+			i.queue_free()
+			Switch = \"null\"
+			return
+		if i.filename == Switch:
+			i.queue_free()
+			
+	add_child(load(value).instance())
+	Switch = value
+
+func _on_register_pressed():
+	self.Switch = \"res://scenes/register.tscn\"
+
+func _on_login_pressed():
+	self.Switch = \"res://scenes/login.tscn\"
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
+
+func _on_QuickGame_pressed():
+	get_tree().quit()
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Label
+
+func _ready():
+	text = G.GAME_VERSION
+	pass
+"
+
+[node name="menu" type="CanvasLayer"]
+
+[node name="registerandlogin" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 0.2
+margin_right = 40.0
+margin_bottom = 40.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="registerandlogin"]
+margin_right = 171.0
+margin_bottom = 35.0
+alignment = 1
+
+[node name="register" type="Button" parent="registerandlogin/HBoxContainer"]
+margin_right = 95.0
+margin_bottom = 35.0
+text = "REGISTER"
+
+[node name="login" type="Button" parent="registerandlogin/HBoxContainer"]
+margin_left = 99.0
+margin_right = 171.0
+margin_bottom = 35.0
+text = "LOGIN"
+
+[node name="Exit" type="Button" parent="."]
+anchor_left = 0.98
+anchor_top = 0.98
+anchor_right = 0.98
+anchor_bottom = 0.98
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource( 1 )
+text = "Exit app"
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="appinfo" type="VBoxContainer" parent="."]
+anchor_left = 0.02
+anchor_top = 0.98
+anchor_right = 0.02
+anchor_bottom = 0.98
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameTitle" type="Label" parent="appinfo"]
+margin_right = 82.0
+margin_bottom = 19.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme = ExtResource( 2 )
+text = "App name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameVersion" type="Label" parent="appinfo"]
+margin_left = 13.0
+margin_top = 23.0
+margin_right = 68.0
+margin_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+text = "Version"
+align = 1
+valign = 1
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="registerandlogin/HBoxContainer/register" to="registerandlogin" method="_on_register_pressed"]
+[connection signal="pressed" from="registerandlogin/HBoxContainer/login" to="registerandlogin" method="_on_login_pressed"]
+[connection signal="pressed" from="Exit" to="Exit" method="_on_QuickGame_pressed"]

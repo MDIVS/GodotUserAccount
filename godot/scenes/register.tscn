@@ -1,0 +1,161 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://themes/main.tres" type="Theme" id=2]
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends VBoxContainer
+
+"
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends LineEdit
+
+
+
+func _on_showpass_toggled(button_pressed):
+	secret = button_pressed
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends LineEdit
+
+
+
+func _on_showpass_toggled(button_pressed):
+	secret = button_pressed
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Button
+var OKPass : bool = false
+var OKEmail : bool = false
+
+var password1 : String = \"\"
+var password2 : String = \"\"
+
+func _on_password_text_changed(new_text):
+	password1 = new_text
+	get_node(\"../passnotification\").visible = !password1.empty() && password1.length()<8
+	OKPass = is_password_ok()
+
+func is_password_ok() -> bool:
+	if password1==password2 && password1.length()>7:
+		return true
+	return false
+"
+
+[node name="register" type="VBoxContainer"]
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="title" type="Label" parent="."]
+margin_left = 69.0
+margin_right = 133.0
+margin_bottom = 19.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme = ExtResource( 2 )
+text = "register"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_top = 23.0
+margin_right = 202.0
+margin_bottom = 31.0
+
+[node name="email" type="LineEdit" parent="."]
+margin_top = 35.0
+margin_right = 202.0
+margin_bottom = 64.0
+placeholder_text = "email"
+
+[node name="emailnotification" type="Label" parent="."]
+visible = false
+margin_left = 5.0
+margin_top = 68.0
+margin_right = 196.0
+margin_bottom = 87.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "Please, insert a valid email"
+align = 1
+valign = 1
+
+[node name="password" type="LineEdit" parent="."]
+margin_top = 68.0
+margin_right = 202.0
+margin_bottom = 97.0
+secret = true
+placeholder_text = "password"
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="passnotification" type="Label" parent="."]
+visible = false
+margin_left = 29.0
+margin_top = 101.0
+margin_right = 173.0
+margin_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "Minimum of 8 digits"
+align = 1
+valign = 1
+
+[node name="password2" type="LineEdit" parent="."]
+margin_top = 101.0
+margin_right = 202.0
+margin_bottom = 130.0
+secret = true
+placeholder_text = "confirm password"
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="passnotification2" type="Label" parent="."]
+visible = false
+self_modulate = Color( 1, 0, 0, 1 )
+margin_left = 11.0
+margin_top = 134.0
+margin_right = 191.0
+margin_bottom = 153.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "password does not math"
+align = 1
+valign = 1
+
+[node name="showpass" type="CheckBox" parent="."]
+margin_top = 134.0
+margin_right = 202.0
+margin_bottom = 161.0
+pressed = true
+text = "Hide password"
+
+[node name="confirm" type="Button" parent="."]
+margin_top = 165.0
+margin_right = 202.0
+margin_bottom = 200.0
+text = "Confirm"
+script = SubResource( 3 )
+[connection signal="text_changed" from="password" to="confirm" method="_on_password_text_changed"]
+[connection signal="toggled" from="showpass" to="password" method="_on_showpass_toggled"]
+[connection signal="toggled" from="showpass" to="password2" method="_on_showpass_toggled"]
